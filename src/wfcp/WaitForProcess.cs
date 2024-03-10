@@ -16,16 +16,10 @@ namespace wfcp
             parentProcess.Start();
             int parentProcessId = parentProcess.Id;
 
-            Console.WriteLine($"Parent process launched with PID: {parentProcessId}");
-
             // Wait for the parent process to exit
             parentProcess.WaitForExit();
 
-            Console.WriteLine($"Parent process exited with return code: {parentProcess.ExitCode}");
-
             WaitForAllChildProcesses(parentProcessId);
-
-            Console.WriteLine("All processes exited.");
         }
 
 
@@ -49,9 +43,7 @@ namespace wfcp
                         // Get the Process object representing the child process
                         Process childProcess = Process.GetProcessById(childProcessId);
 
-                        Console.WriteLine($"> Waiting for child process with PID: {childProcessId}");
                         childProcess.WaitForExit();
-                        Console.WriteLine($"PID: {childProcessId} already exited.");
 
                         // Recursively call WaitForAllChildProcesses to wait for any child processes of the current child process
                         WaitForAllChildProcesses(childProcessId);
